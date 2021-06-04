@@ -9,7 +9,7 @@ export async function runFibonacciTest(n: number): Promise<void> {
   console.log(computeFibonacci(n));
 
   const wasmFibonacci = await getWasmFunction();
-  console.log(wasmFibonacci(42));
+  console.log(wasmFibonacci(n));
 }
 
 export function computeFibonacci(n: number): number {
@@ -24,7 +24,7 @@ export function computeFibonacci(n: number): number {
     return 0
   }
 
-  // Base case 1
+  // Base case 2
   if (n == 1) {
     return 1
   }
@@ -41,8 +41,8 @@ export function computeFibonacci(n: number): number {
   return s2;
 }
 
-async function getWasmFunction(): Promise<CallableFunction> {
-  const wasmCode = await Deno.readFile("./fibonacci.wasm");
+export async function getWasmFunction(): Promise<CallableFunction> {
+  const wasmCode = await Deno.readFile("./bin/fibonacci.wasm");
   const wasmModule = new WebAssembly.Module(wasmCode);
   const wasmInstance = new WebAssembly.Instance(wasmModule);
   return wasmInstance.exports.Fibonacci as CallableFunction;
