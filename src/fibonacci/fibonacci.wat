@@ -11,26 +11,23 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;; Error case
-    local.get $n
-    i32.const 0
-    i32.lt_s
-    if ;; n < 0
+    ;; n < 0
+    (i32.lt_s (local.get $n) (i32.const 0))
+    if 
       (return (local.get $n))
     end
 
     ;; Base case 1
-    local.get $n
-    i32.const 0
-    i32.eq
-    if ;; n == 0
+    ;; n == 0
+    (i32.eq (local.get $n) (i32.const 0))
+    if 
       (return (i32.const 0))
     end
 
     ;; Base case 2
-    local.get $n
-    i32.const 1
-    i32.eq
-    if ;; n == 1
+    ;; n == 1
+    (i32.eq (local.get $n) (i32.const 1))
+    if 
       (return (i32.const 1))
     end
 

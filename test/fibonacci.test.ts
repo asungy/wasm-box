@@ -1,14 +1,14 @@
 import { assertEquals } from "https://deno.land/std@0.97.0/testing/asserts.ts";
-import { computeFibonacci, getWasmFunction } from "../src/fibonacci/fibonacci.ts";
+import { fibonacci, getWasmFunction } from "../src/fibonacci/fibonacci.ts";
 
 Deno.test("Testing Fibonacci implementation (in TypeScript)", () => {
-  assertEquals(computeFibonacci(0), 0);
-  assertEquals(computeFibonacci(1), 1);
-  assertEquals(computeFibonacci(2), 1);
-  assertEquals(computeFibonacci(3), 2);
-  assertEquals(computeFibonacci(4), 3);
-  assertEquals(computeFibonacci(5), 5);
-  assertEquals(computeFibonacci(6), 8);
+  assertEquals(fibonacci(0), 0);
+  assertEquals(fibonacci(1), 1);
+  assertEquals(fibonacci(2), 1);
+  assertEquals(fibonacci(3), 2);
+  assertEquals(fibonacci(4), 3);
+  assertEquals(fibonacci(5), 5);
+  assertEquals(fibonacci(6), 8);
 });
 
 Deno.test("Testing Fibonacci implementation (in WebAssembly Text)", async () => {

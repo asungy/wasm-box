@@ -6,13 +6,33 @@
 export async function runFibonacciTest(n: number): Promise<void> {
   console.log(`Computing the ${n}-th Fibonacci number`);
 
-  console.log(computeFibonacci(n));
+  const startMarker1 = "typescript-impl-start";
+  const stopMarker1  = "typescript-impl-stop";
+  const startMarker2 = "wasm-impl-start";
+  const stopMarker2  = "wasm-impl-stop";
+  const measureName1 = "Typescript Performance (Fibonacci)";
+  const measureName2 = "WebAssembly Performance (Fibonacci)";
 
   const wasmFibonacci = await getWasmFunction();
-  console.log(wasmFibonacci(n));
+
+  performance.mark(startMarker1);
+  fibonacci(n);
+  performance.mark(stopMarker1);
+
+  performance.mark(startMarker2);
+  wasmFibonacci(n);
+  performance.mark(stopMarker2);
+
+  performance.measure(measureName1, startMarker1, stopMarker1);
+  performance.measure(measureName2, startMarker2, stopMarker2);
+
+  console.log(performance.getEntriesByType("measure"));
+
+  performance.clearMarks();
+  performance.clearMeasures();
 }
 
-export function computeFibonacci(n: number): number {
+export function fibonacci(n: number): number {
   // Error case
   if (n < 0) {
     console.error(`Nonsensical input. Specified ${n} Fibonacci numbers.`);
