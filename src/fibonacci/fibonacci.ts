@@ -1,9 +1,40 @@
-/**
- * Runs the Fibonacci benchmark test
- *
- * @param {number} n - The n-th Fibonacci number to compute
- */
-export async function runFibonacciTest(n: number): Promise<void> {
+// Performance record for Typescript and WebAssembly implementations
+type Record = {
+  size: number;
+  tsDuration: number;
+  wasmDuration: number;
+  delta: number;
+};
+
+export async function runFibonacciTest(begin: number, end: number, step: number): Promise<void> {
+  const wasmFibonacci = await getWasmFunction();
+  let recordList: Array<Record> = [];
+
+  for (let size = begin; size <= end; size += step) {
+    let start: number;
+    let finish: number;
+
+    // Testing Typescript implementation
+    start = performance.now();
+    fibonacci(size);
+    finish = performance.now();
+    let tsDuration = finish - start;
+
+    // Testing WebAssembly implementation
+    start = performance.now();
+    wasmFibonacci(size);
+    finish = performance.now();
+    let wasmDuration = finish - start;
+
+    let delta = Math.abs(tsDuration - wasmDuration);
+    recordList.push({ size, tsDuration, wasmDuration, delta });
+  }
+
+  console.log(recordList);
+}
+
+async function performanceRunSample(): Promise<void> {
+  let n = 100000;
   console.log(`Computing the ${n}-th Fibonacci number`);
 
   const startMarker1 = "typescript-impl-start";

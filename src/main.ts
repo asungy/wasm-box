@@ -11,9 +11,9 @@ switch (Deno.args[0]) {
     break;
   // Run Fibonacci benchmark. Specify the desired index of the fibonacci sequence with arg1. 
   case "fibonacci":
-    let arg1 = parseInt(Deno.args[1]);
+    // let arg1 = parseInt(Deno.args[1]);
     await buildWASMFiles();
-    await runFibonacciTest(arg1);
+    await runFibonacciTest(100000, 5000000, 100000);
     break;
 
   default:
